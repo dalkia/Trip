@@ -2,11 +2,10 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import models.Match;
-import play.*;
+import models.Player;
 import play.data.Form;
-import play.mvc.*;
-
-import views.html.*;
+import play.mvc.Controller;
+import play.mvc.Result;
 
 public class Application extends Controller {
   
@@ -18,6 +17,13 @@ public class Application extends Controller {
   public static class FindMatchForm {
       public String name;
   }
+
+  public static class LoginForm {
+      public String username;
+      public String password;
+  }
+
+
 
   public static Result findMatch() {
       Form<FindMatchForm> findMatchForm = form(FindMatchForm.class).bindFromRequest();
@@ -32,4 +38,21 @@ public class Application extends Controller {
 
       return ok(match.id.toString());
   }
+
+  public static Result login(){
+      Form<LoginForm> loginForm = form(LoginForm.class).bindFromRequest();
+
+      Player player = Player.getPlayerByUsername(loginForm.get().username);
+
+      if(player==null){
+        player = new Player();
+        player.username = loginForm.get().username;
+        player.password = loginForm.get().password;
+        Player.create(player);
+      }
+
+      return ok(player.username);
+  }
+
+
 }

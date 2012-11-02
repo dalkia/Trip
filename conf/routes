@@ -11,3 +11,10 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 POST     /findMatch                  controllers.Application.findMatch()
 
+POST    /login                       controllers.Application.login()
+
+POST   /getMatchData                 controllers.Matches.getMatchData()
+
+POST  /getDefendingMatches           controllers.Matches.getDefendingMatches()
+
+POST  /sendAttackData                controllers.Matches.sendAttackData()
